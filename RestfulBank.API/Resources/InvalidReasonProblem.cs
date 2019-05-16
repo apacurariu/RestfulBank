@@ -7,15 +7,9 @@ namespace RestfulBank.API.Resources
 {
     public class InvalidReasonProblem : ProblemDetails
     {
-        public InvalidReasonProblem(string type)
-            : base(type)
+        public InvalidReasonProblem()
         {
             Detail = "Please provide a valid transfer reason.";
-        }
-
-        public override string GetMediaType()
-        {
-            return "application/vnd.restfulbank.invalidreason+json";
         }
     }
 }

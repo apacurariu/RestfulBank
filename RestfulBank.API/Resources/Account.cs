@@ -1,18 +1,35 @@
 ﻿using System;
+using RestfulBank.API.Model;
 
 namespace RestfulBank.API.Resources
 {
-    public class Account : Resource
+    public class Account : Resource<Model.Account>
     {
-        public string Id { get; set; }
-        public string IBAN { get; set; }
-        public string Name { get; set; }
-        public double Amount { get; set; }
-        public string Currency { get; set; }
-
-        public override string GetMediaType()
+        public Account(string basePath, Model.Account model)
+            : base(basePath, model)
         {
-            return "application/vnd.restfulbank.account+json";
+            Id = model.Id.ToString("n");
+            IBAN = model.IBAN;
+            Amount = model.Amount;
+            Currency = model.Currency;
+
+            AddSelf($"accounts/{Id}");
+
+            if (model.CanWithdraw)
+            {
+                AddLink("withdraw", $"accounts/{Id}/withdrawals");
+            }
+
+            if (model.CanClose)
+            {
+                AddLink("close", $"accounts/{Id}");
+            }
         }
+
+        public string Id { get; private set; }
+        public string IBAN { get; private set; }
+        public string Name { get; private set; }
+        public double Amount { get; private set; }
+        public string Currency { get; private set; }
     }
 }

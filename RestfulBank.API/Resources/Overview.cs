@@ -4,18 +4,17 @@ using System.Threading.Tasks;
 
 namespace RestfulBank.API.Resources
 {
-    public class Overview : Resource
+    public class Overview : Resource<Model.Overview>
     {
-        public Overview()
+        public Overview(string basePath, Model.Overview model) 
+            : base(basePath, model)
         {
-            Accounts = new List<Account>();
+            Accounts = new List<Account>(model.Accounts.Select(a => new Account(basePath, a)));
+
+            AddSelf();
+            AddLink("transfers", "transfers");
         }
 
         public ICollection<Account> Accounts { get; private set; }
-
-        public override string GetMediaType()
-        {
-            return "application/vnd.restfulbank.overview+json";
-        }
     }
 }

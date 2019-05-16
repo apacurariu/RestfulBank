@@ -23,11 +23,11 @@ namespace RestfulBank.API.Controllers
 
             if (account == null)
             {
-                return this.NotFoundResource(new AccountNotFoundProblem(null, accountId));
+                return this.NotFoundResource(new AccountNotFoundProblem(accountId));
             }
             else
             {
-                return this.OkResource(ResourceFormatter.FormatAccount(account));
+                return this.OkResource(new Account("api", account));
             }
         }
 
@@ -42,19 +42,19 @@ namespace RestfulBank.API.Controllers
             }
             else if (result.Status == WithdrawStatus.AccountNotFound)
             {
-                return this.NotFoundResource(new AccountNotFoundProblem(null, accountId));
+                return this.NotFoundResource(new AccountNotFoundProblem(accountId));
             }
             else if (result.Status == WithdrawStatus.DailyQuotaReached)
             {
-                return this.BadRequestResource(new DailyQuotaReachedProblem(null, result.DailyLimit));
+                return this.BadRequestResource(new DailyQuotaReachedProblem(result.DailyLimit));
             }
             else if (result.Status == WithdrawStatus.AccountDoesNotAllowWithdrawals)
             {
-                return this.BadRequestResource(new AccountDoesNotAllowWithdrawalsProblem(null));
+                return this.BadRequestResource(new AccountDoesNotAllowWithdrawalsProblem());
             }
             else //if (result.Status == WithdrawStatus.InsufficientFunds)
             {
-                return this.BadRequestResource(new InsufficientFundsProblem(null, result.AvailableFunds));
+                return this.BadRequestResource(new InsufficientFundsProblem(result.AvailableFunds));
             }
         }
 
@@ -69,16 +69,16 @@ namespace RestfulBank.API.Controllers
             }
             else if (result.Status == CloseAccountStatus.AccountNotFound)
             {
-                return this.NotFoundResource(new AccountNotFoundProblem(null, accountId));
+                return this.NotFoundResource(new AccountNotFoundProblem(accountId));
             }
             else if (result.Status == CloseAccountStatus.AccountIsNotEmpty)
             {
-                return this.BadRequestResource(new AccountIsNotEmptyProblem(null, accountId));
+                return this.BadRequestResource(new AccountIsNotEmptyProblem(accountId));
             }
             else //if (result.Status == CloseAccountStatus.AccountCannotBeClosed)
             {
-                return this.BadRequestResource(new AccountCannotBeClosedProblem(null, accountId));
+                return this.BadRequestResource(new AccountCannotBeClosedProblem(accountId));
             }
         }
-    }   
+    }
 }

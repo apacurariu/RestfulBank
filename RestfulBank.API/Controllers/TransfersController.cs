@@ -26,23 +26,23 @@ namespace RestfulBank.API.Controllers
             }
             else if (result.Status == TransferStatus.AccountNotFound)
             {
-                return NotFound(new AccountNotFoundProblem(null, result.MissingAccountId));
+                return NotFound(new AccountNotFoundProblem(result.MissingAccountId));
             }
             else if (result.Status == TransferStatus.DailyQuotaReached)
             {
-                return this.BadRequestResource(new DailyQuotaReachedProblem(null, result.DailyLimit));
+                return this.BadRequestResource(new DailyQuotaReachedProblem(result.DailyLimit));
             }
             else if (result.Status == TransferStatus.InsufficientFunds)
             {
-                return this.BadRequestResource(new InsufficientFundsProblem(null, result.AvailableFunds));
+                return this.BadRequestResource(new InsufficientFundsProblem(result.AvailableFunds));
             }
             else if (result.Status == TransferStatus.AccountDoesNotAllowWithdrawals)
             {
-                return this.BadRequestResource(new AccountDoesNotAllowWithdrawalsProblem(null));
+                return this.BadRequestResource(new AccountDoesNotAllowWithdrawalsProblem());
             }
             else //if (result.Status == TransferStatus.InvalidReason)
             {
-                return this.BadRequestResource(new InvalidReasonProblem(null));
+                return this.BadRequestResource(new InvalidReasonProblem());
             }
         }
     }

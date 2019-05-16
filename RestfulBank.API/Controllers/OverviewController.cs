@@ -19,9 +19,7 @@ namespace RestfulBank.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var overview = ResourceFormatter.FormatOverview(_overviewProvider.GetOverview());
-
-            return this.OkResource(overview);
+            return this.OkResource(new Overview("api", _overviewProvider.GetOverview()));
         }
     }
 }
