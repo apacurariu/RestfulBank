@@ -11,6 +11,6 @@ namespace RestfulBank.API.Resources
 
         public ICollection<Link> Links { get; private set; }
 
-        public abstract string GetMediaType(); //te
+        public abstract string GetMediaType();
     }
 }
