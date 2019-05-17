@@ -12,6 +12,7 @@ namespace RestfulBank.API.Resources
             IBAN = model.IBAN;
             Amount = model.Amount;
             Currency = model.Currency;
+            Name = model.Name;
 
             AddSelf($"accounts/{Id}");
 
