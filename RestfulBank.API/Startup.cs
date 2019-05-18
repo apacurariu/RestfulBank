@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using RestfulBank.API.ApplicationServices;
 using RestfulBank.API.Domain;
 using RestfulBank.API.Infrastructure;
+using Newtonsoft.Json;
 
 namespace RestfulBank.API
 {
@@ -29,7 +30,7 @@ namespace RestfulBank.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.MissingMemberHandling = Newtonsoft.Json.MissingMemberHandling.Error);
 
             services.AddScoped<ITransfersService, TransfersService>();
             services.AddScoped<IAccountService, AccountService>();
